@@ -36,3 +36,25 @@ ENDFUNC
           @xRetVal, xRetLen, pINIFile)
   Return Left(xRetVal, AT(CHR(0),xRetVal)-1)
  ENDFUNC
+ 
+ 
+ **----Conexion Data Center ----*
+ 
+ FUNCTION CN_BD(pEstructura_conexion as String) as String
+ 	LOCAL xEstructura_conexion
+ 	xEstructura_conexion=ALLTRIM(pEstructura_conexion)
+ 	cn_conectar=SQLSTRINGCONNECT(xEstructura_conexion)
+ 	IF cn_conectar=0 then
+ 		RETURN 0
+ 	ELSE
+ 		RETURN cn_conectar
+ 	ENDIF
+ ENDFUNC
+ 
+ *---close connection server-------------*
+ 
+ FUNCTION ds_bd(pConexion as Integer) as Integer
+ 	IF pConexion=0 THEN
+ 		SQLDISCONNECT(pConexion)
+ 	ENDIF 
+ ENDFUNC 

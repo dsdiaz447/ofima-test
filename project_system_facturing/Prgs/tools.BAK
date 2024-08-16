@@ -1,6 +1,6 @@
 FUNCTION Crear_Estruc_Conexion(cIdSistema as String) as String
   LOCAL xDriver, xServidor, xBasedeDatos, xId, xClave, xEstructura
-  
+
   && Verificamos a qué Servidor nos Conectamos
   xServidor = ALLTRIM(LeerIni("SERVIDOR", "SERVER", "c:\project_test_1\ofima-test\project_system_facturing\testSystem.INI"))  
   xDriver = ALLTRIM(LeerIni("SERVIDOR", "DRIVER_ODBC", "c:\project_test_1\ofima-test\project_system_facturing\testSystem.INI"))
@@ -9,11 +9,15 @@ FUNCTION Crear_Estruc_Conexion(cIdSistema as String) as String
   xBasedeDatos = ALLTRIM(LeerIni(cIdSistema, "BASEDEDATOS", "c:\project_test_1\ofima-test\project_system_facturing\testSystem.INI"))
   xId = ALLTRIM(LeerIni(cIdSistema, "USUARIO", "c:\project_test_1\ofima-test\project_system_facturing\testSystem.INI"))
   xClave = ALLTRIM(LeerIni(cIdSistema, "CLAVE", "c:\project_test_1\ofima-test\project_system_facturing\testSystem.INI"))
-  
+
   xEstructura = "Driver=" + xDriver + ";Server=" + xServidor + ";Database=" + xBasedeDatos + ";Uid=" + xId + ";Pwd=" + xClave + ";"
-    
+  
+  && Verifica la cadena de conexión construida
+  ? "Cadena de conexión construida: " + xEstructura
+ 
   RETURN xEstructura
 ENDFUNC
+
 
  
  
@@ -32,3 +36,25 @@ ENDFUNC
           @xRetVal, xRetLen, pINIFile)
   Return Left(xRetVal, AT(CHR(0),xRetVal)-1)
  ENDFUNC
+ 
+ 
+ **----Conexion Data Center ----*
+ 
+ FUNCTION CN_BD(pEstructura_conexion as String) as String
+ 	LOCAL xEstructura_conexion
+ 	xEstructura_conexion=ALLTRIM(pEstructura_conexion)
+ 	cn_conectar=SQLSTRINGCONNECT(xEstructura_conexion)
+ 	IF cn_conectar=0 then
+ 		RETURN 0
+ 	ELSE
+ 		RETURN cn_conectar
+ 	ENDIF
+ ENDFUNC
+ 
+ *---close connection server-------------*
+ 
+ FUNCTION ds_bd() as Integer
+ 	IF pConexion=0 THEN
+ 		SQLDISCONNECT(pConexion)
+ 	ENDIF 
+ ENDFUNC 
