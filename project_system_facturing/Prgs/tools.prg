@@ -1,3 +1,5 @@
+
+
 FUNCTION Crear_Estruc_Conexion(cIdSistema as String) as String
   LOCAL xDriver, xServidor, xBasedeDatos, xId, xClave, xEstructura
 
@@ -18,8 +20,6 @@ FUNCTION Crear_Estruc_Conexion(cIdSistema as String) as String
   RETURN xEstructura
 ENDFUNC
 
-
- 
  
  FUNCTION LeerIni(pSeccion as String, pClave as string, pINIFile as string) as string
   LOCAL xDefault, xRetVal, xRetLen
@@ -37,8 +37,7 @@ ENDFUNC
   Return Left(xRetVal, AT(CHR(0),xRetVal)-1)
  ENDFUNC
  
- 
- **----Conexion Data Center ----*
+ *--CONECTAR BASE DE DATOS--*
  
  FUNCTION CN_BD(pEstructura_conexion as String) as String
  	LOCAL xEstructura_conexion
@@ -51,10 +50,17 @@ ENDFUNC
  	ENDIF
  ENDFUNC
  
- *---close connection server-------------*
+ *--CERRAR CONEXION A BD--*
  
  FUNCTION ds_bd(pConexion as Integer) as Integer
  	IF pConexion=0 THEN
  		SQLDISCONNECT(pConexion)
  	ENDIF 
  ENDFUNC 
+ 
+ 
+ PROCEDURE List_menu
+ 	cn=cn_bd(_screen.conn)
+ 		SQLEXEC(cn,"exec LIST_TB_MENUS","Cur_menuf")
+ 	ds_bd(cn)
+ ENDPROC
