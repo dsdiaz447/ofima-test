@@ -1,14 +1,7 @@
-*==================================================================================================================================================================
-*  Nombre del autor: Walter R. Ojeda Valiente
-* Fecha de creación: 03/ABR/2022
-*   Tarea realizada: Ejemplos prácticos del uso de la biblioteca de clases W_MENU_LATERAL.VCX
-*                  : En este programa MAIN.PRG se declara e inicializa todo lo relacionado en forma general a la aplicación
-*==================================================================================================================================================================
-  
   CLOSE ALL
   CLEAR ALL
   
-  *--- Muestra una ventanita con los datos del error que ocurrió
+
   
   ON ERROR MessageBox("Error N°: " + Transform(Error()) + CHR(13) + CHR(13) ;
                     + Message() + CHR(13) + CHR(13) ;
@@ -16,7 +9,7 @@
                     + "Línea N°: " + Transform(Lineno(1)) + Chr(13) + Chr(13) ;
                     + "Alias: " + Alias())
    
-  *--- Se establecen los SET que se usarán inicialmente en esta aplicación
+
   
   DO SETS_INICIALES
   
@@ -28,8 +21,9 @@
     .AddObject("oColeccionForms", "COLLECTION")
     .AddProperty("oFormMain")     && El formulario MAIN, para que sea muy fácil acceder a sus propiedades, métodos, y controles
   ENDWITH
-  
+ 
   DO FORM MAIN
+    SET STEP ON
   READ EVENTS
   
   CLOSE ALL
